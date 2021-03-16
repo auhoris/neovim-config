@@ -41,14 +41,17 @@ set incsearch
 
 " Autoindent
 set autoindent
+set tabstop=4
+set shiftwidth=4
+set softtabstop=0 noexpandtab
 
 " Set mouse on
 set mouse=a
 
 " Enable theming support
-if (has("termguicolors"))
- set termguicolors
-endif
+"if (has("termguicolors"))
+"set termguicolors
+"endif
 
 " Подсветка строки
 set cursorline
@@ -66,22 +69,31 @@ set smartcase
 set list
 set listchars=tab:›\ ,precedes:‹,nbsp:·,trail:·
 
-
-"zc                        свернуть блок
-"zo                        развернуть блок
-"zM                        закрыть все блоки
-"zR                        открыть все блоки
-"za                        инвертирование
-set foldenable           	"включить свoрачивание
-set foldmethod=manual
-set foldnestmax=10
-set nofoldenable
-set foldlevel=2
-"set foldmethod=syntax    	"сворачивание на основе синтаксиса
-"set foldmethod=indent    	"сворачивание на основе отступов
-"set foldmethod=manual    	"выделяем участок с помощью v и говорим zf
-"set foldmethod=marker    	"сворачивание на основе маркеров в тексте
-set foldmarker=bigin,end 	"задаем маркеры начала и конца блока
-
-
 set splitbelow splitright
+
+let g:airline#extensions#branch#enabled = 1
+
+" Autoformatting on save
+"autocmd BufWritePost * execute "normal gg=G"
+function ShowSpaces(...)
+  let @/='\v(\s+$)|( +\ze\t)'
+  let oldhlsearch=&hlsearch
+  if !a:0
+    let &hlsearch=!&hlsearch
+  else
+    let &hlsearch=a:1
+  end
+  return oldhlsearch
+endfunction
+
+function TrimSpaces() range
+  let oldhlsearch=ShowSpaces(1)
+  execute a:firstline.",".a:lastline."substitute ///gec"
+  let &hlsearch=oldhlsearch
+endfunction
+
+command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
+command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
+"nnoremap <F12>     :ShowSpaces 1<CR>
+"nnoremap <leader><space>   m`:TrimSpaces<CR>``
+"vnoremap <leader> :TrimSpaces<CR>

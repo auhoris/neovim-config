@@ -19,7 +19,6 @@ source $HOME/.config/nvim/vim-plug/plugins.vim
 source $HOME/.config/nvim/fzf/fzf.vim
 "source $HOME/.config/nvim/themes/onedark.vim
 
-
 " For powerline looking good
 let g:airline_powerline_fonts = 1
 
@@ -34,5 +33,6 @@ set comments=sl:/*,mb:**,elx:*/
 lua require 'nvim-treesitter.configs'.setup {highlight = {enable = true}}
 
 " Set colorsheme
-colorscheme onedark
+set termguicolors
+colorscheme OceanicNext
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'

@@ -39,7 +39,8 @@ noremap <silent> <C-Down> :resize -3<CR>
 
 "Splitting
 map <C-w>v :vs <C-r>=expand("%:p:h")<CR>/
-map <C-w>s :s <C-r>=expand("%:p:h")<CR>/
+"map <C-w>s :s <C-r>
+map <C-w>s :split <C-r>=expand("%:p:h")<CR>/
 
 " Buffer switching
 map <Leader>te :tabnew <C-r>=expand("%:p:h")<CR>/
